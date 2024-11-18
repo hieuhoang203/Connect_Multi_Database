@@ -17,9 +17,9 @@ import javax.sql.DataSource;
 
 @Configuration
 @EnableTransactionManagement
-@EntityScan(basePackages = "com.example.demo.live.entity")
+@EntityScan(basePackages = "com.example.demo.entity")
 @EnableJpaRepositories(
-        basePackages = "com.example.demo.live.repositories",
+        basePackages = "com.example.demo.repositories.live",
         entityManagerFactoryRef = "liveEntityManagerFactory",
         transactionManagerRef = "liveTransactionManager"
 )
@@ -32,7 +32,7 @@ public class LiveDatasourceConfig {
             @Qualifier("liveDataSource") DataSource dataSource) {
         return builder
                 .dataSource(dataSource)
-                .packages("com.example.demo.live.entity")
+                .packages("com.example.demo.entity")
                 .persistenceUnit("live")
                 .build();
     }

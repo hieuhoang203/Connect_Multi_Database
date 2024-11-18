@@ -16,9 +16,9 @@ import javax.sql.DataSource;
 
 @Configuration
 @EnableTransactionManagement
-@EntityScan(basePackages = "com.example.demo.backup.entity")
+@EntityScan(basePackages = "com.example.demo.entity")
 @EnableJpaRepositories(
-        basePackages = "com.example.demo.backup.repositories",
+        basePackages = "com.example.demo.repositories.backup",
         entityManagerFactoryRef = "backupEntityManagerFactory",
         transactionManagerRef = "backupTransactionManager"
 )
@@ -30,7 +30,7 @@ public class BackupDatasourceConfig {
             @Qualifier("backupDataSource") DataSource dataSource) {
         return builder
                 .dataSource(dataSource)
-                .packages("com.example.demo.backup.entity")
+                .packages("com.example.demo.entity")
                 .persistenceUnit("backup")
                 .build();
     }

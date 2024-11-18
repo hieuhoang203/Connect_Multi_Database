@@ -1,4 +1,4 @@
-package com.example.demo.backup.entity;
+package com.example.demo.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -17,7 +17,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class SongBackup {
+public class Song {
 
     @Id
     @Column(name = "id")

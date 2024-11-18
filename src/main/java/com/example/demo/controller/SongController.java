@@ -1,7 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.common.request.SongRequest;
-import com.example.demo.live.entity.SongLive;
+import com.example.demo.entity.Song;
 import com.example.demo.service.SongService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -21,22 +21,22 @@ public class SongController {
     private final SongService songService;
 
     @PostMapping(value = "/save")
-    public SongLive save(@RequestBody SongRequest request) {
+    public Song save(@RequestBody SongRequest request) {
         return songService.save(request);
     }
 
     @PutMapping(value = "/update/{id}")
-    public SongLive update(@PathVariable String id, @RequestBody SongRequest request) {
+    public Song update(@PathVariable String id, @RequestBody SongRequest request) {
         return songService.update(id, request);
     }
 
     @DeleteMapping(value = "/delete/{id}")
-    public SongLive delete(@PathVariable String id) {
+    public Song delete(@PathVariable String id) {
         return songService.delete(id);
     }
 
     @GetMapping(value = "/search/{id}")
-    public SongLive search(@PathVariable String id) {
+    public Song search(@PathVariable String id) {
         return songService.search(id);
     }
 

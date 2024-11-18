@@ -1,10 +1,9 @@
 package com.example.demo.service;
 
-import com.example.demo.backup.entity.SongBackup;
-import com.example.demo.backup.repositories.SongBackupRepository;
 import com.example.demo.common.request.SongRequest;
-import com.example.demo.live.entity.SongLive;
-import com.example.demo.live.repositories.SongLiveRepository;
+import com.example.demo.entity.Song;
+import com.example.demo.repositories.backup.SongBackupRepository;
+import com.example.demo.repositories.live.SongLiveRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,28 +18,23 @@ public class SongService {
 
     private final SongBackupRepository songBackupRepository;
 
-    public SongLive save(SongRequest request) {
+    public Song save(SongRequest request) {
         String id = UUID.randomUUID().toString();
-        SongLive songLive = SongLive.builder()
+        Song songLive = Song.builder()
                                 .id(id)
                                 .name(request.getName())
                                 .duration(request.getDuration())
                                 .build();
-        SongBackup songBackup = SongBackup.builder()
-                .id(id)
-                .name(request.getName())
-                .duration(request.getDuration())
-                .build();
         songLiveRepository.save(songLive);
-        songBackupRepository.save(songBackup);
+        songBackupRepository.save(songLive);
         return songLive;
     }
 
-    public SongLive update(String id, SongRequest request) {
-        Optional<SongLive> songLive = songLiveRepository.findById(id);
+    public Song update(String id, SongRequest request) {
+        Optional<Song> songLive = songLiveRepository.findById(id);
         songLive.get().setName(request.getName());
         songLive.get().setDuration(request.getDuration());
-        Optional<SongBackup> songBackup = songBackupRepository.findById(id);
+        Optional<Song> songBackup = songBackupRepository.findById(id);
         songBackup.get().setName(request.getName());
         songBackup.get().setDuration(request.getDuration());
         songLiveRepository.save(songLive.get());
@@ -48,18 +42,22 @@ public class SongService {
         return songLive.get();
     }
 
-    public SongLive delete(String id) {
-        Optional<SongLive> songLive = songLiveRepository.findById(id);
-        Optional<SongBackup> songBackup = songBackupRepository.findById(id);
+    public Song delete(String id) {
+        Optional<Song> songLive = songLiveRepository.findById(id);
+        Optional<Song> songBackup = songBackupRepository.findById(id);
         songLiveRepository.delete(songLive.get());
         songBackupRepository.delete(songBackup.get());
         return songLive.get();
     }
 
-    public SongLive search(String id) {
-        Optional<SongLive> object = songLiveRepository.findById(id);
-        return object.get();
+    public Song search(String id) {
+        try {
+            Optional<Song> object = songLiveRepository.findById(id);
+            return object.get();
+        } catch (Exception e) {
+            Optional<Song> object = songBackupRepository.findById(id);
+            return object.get();
+        }
     }
-
 
 }

@@ -1,6 +1,4 @@
 spring:
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
   sql:
     init:
       encoding: UTF-8
@@ -8,12 +6,14 @@ spring:
     show-sql: true
 data-live:
   datasource:
-    url: jdbc:mysql://localhost:3306/test1
-    username: root
-    password: 08092003
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${MYSQL_HOST:42.113.122.119}:3306/APP_V2_Backup?characterEncoding=utf8
+    username: ${DB_UASERNAME:vnfite_2}
+    password: ${DB_PASSWORD:Vnfite20000712!@#}
 data-backup:
   datasource:
-    url: jdbc:mysql://localhost:3306/test2
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/test1
     username: root
     password: 08092003
 #spring:
